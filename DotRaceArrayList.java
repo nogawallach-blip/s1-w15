@@ -46,6 +46,8 @@ public class DotRaceArrayList extends JPanel {
       int k = 0;
       while (k < racerCount) {
          Dot aDotObject = new Dot(randomName(), k, randomColor(), defaultDiameter);
+         dots.add(aDotObject);
+         k++;
          // FINISH THIS -- insert the Dot object to the dots ArrayList
 
       }
@@ -72,7 +74,19 @@ public class DotRaceArrayList extends JPanel {
    public double distanceWon(Dot winner){
        //FINISH THIS: loop over dots list...
        //find the second place Dot
-       // subtract the winner distance from second place      
+       // subtract the winner distance from second place  
+      double i = -1.00;
+      Dot second = dots.get(0);
+      if(winner == second)
+         second = dots.get(1);
+
+      for(Dot d: dots){
+         if(winner != d && d.getDistance() > i){
+            second = d;
+            i = d.getDistance();
+         } 
+      }  
+      return winner.getDistance() - second.getDistance();   
    
    }
    
@@ -80,6 +94,7 @@ public class DotRaceArrayList extends JPanel {
    private Dot whoMoves() {
       int d = randGen.nextInt(dots.size()); // a number between 0 and one less than the number of dots
       // FINISH THIS: return the Dot pointed to by 'd'
+      return dots.get(d);
  
    }
    
@@ -116,6 +131,10 @@ public class DotRaceArrayList extends JPanel {
    // Draw all of the Dot objects
    public void drawRacers(Graphics g) {
       // FINISH THIS -- call drawRacer() for each Dot in dots
+      for(int c = 0; c < dots.size(); c++){
+         this.drawRacer(dots.get(c), g);
+
+      }
       
    }
 
@@ -186,8 +205,15 @@ public class DotRaceArrayList extends JPanel {
 
    // returns a random element from the someColors ArrayList
    public Color randomColor() {
+      Random r = new Random();
+      ArrayList<Color> taken = new ArrayList<>();
+      int x = r.nextInt(someColors.size());
+      taken.add(someColors.get(x));
+      someColors.remove(x);
+   
+
        //FINISH THIS: MAKE SURE IT NEVER REPEATS until all used
-      return someColors.get(randGen.nextInt(someColors.size()));
+      return taken.get(taken.size() - 1);
    }
 
    

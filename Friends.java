@@ -16,9 +16,11 @@ public class Friends {
        // add three names to the ArrayList
    }
    
-   public void printRandomFriend(){
-        System.out.print(friends.get(rand.nextInt(friends.size())));
-        
+   public Name getRandomFriend(){
+        //int x = rand.nextInt(friends.size());
+        int x = (int)(Math.random() * friends.size());
+
+        return friends.get(x);
        //return a random Name object from the List
     }
      
